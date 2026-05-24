@@ -11,6 +11,14 @@ const CATEGORY_CONFIG = [
 ];
 
 const fetchPlacesByCategory = async (lat, lng, queryFilter, radius = 5000) => {
+  const query = `
+    [out:json][timeout:20];
+    (
+      node[${queryFilter}](around:${radius},${lat},${lng});
+      way[${queryFilter}](around:${radius},${lat},${lng});
+    );
+    out center 15;
+  `;
   const BACKEND = import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000';
   const res = await fetch(`${BACKEND}/api/proxy/travel`, {
     method: 'POST',
