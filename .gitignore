@@ -1,0 +1,16 @@
+# Environment files — never upload these
+backend/.env
+frontend/.env
+
+# Node modules — too large for GitHub
+node_modules/
+backend/node_modules/
+frontend/node_modules/
+
+# Build output
+frontend/dist/
+frontend/.vite/
+
+# OS files
+.DS_Store
+Thumbs.db
