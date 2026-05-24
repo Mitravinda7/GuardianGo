@@ -8,13 +8,10 @@ router.get('/', getAlerts);
 router.post('/', protect, createAlert);
 router.delete('/:id', protect, deleteAlert);
 
-export default router;
-
-import fetch from 'node-fetch';
-
 router.get('/aqi', async (req, res) => {
   const { lat, lng } = req.query;
   try {
+    const fetch = (await import('node-fetch')).default;
     const response = await fetch(
       `https://api.waqi.info/feed/geo:${lat};${lng}/?token=demo`
     );
@@ -24,3 +21,5 @@ router.get('/aqi', async (req, res) => {
     res.status(500).json({ success: false, message: 'AQI fetch failed' });
   }
 });
+
+export default router;

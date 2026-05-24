@@ -13,48 +13,64 @@ import alertRoutes from './routes/alert.routes.js';
 import sosRoutes from './routes/sos.routes.js';
 import userRoutes from './routes/user.routes.js';
 
-process.on('uncaughtException', (err) => {
-  if (err.code === 'EADDRINUSE') {
-    console.log(`Port ${ENV.PORT} busy, trying ${parseInt(ENV.PORT) + 1}...`);
-    httpServer.listen(parseInt(ENV.PORT) + 1);
-  }
-});
 const app = express();
 const httpServer = createServer(app);
+
+// Allow ALL origins — fixes Vercel CORS
 const io = new Server(httpServer, {
-  cors: {
-    origin: ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:5175'],
-    methods: ['GET', 'POST']
-  },
+  cors: { origin: '*', methods: ['GET', 'POST'] },
 });
 
-// Connect Database
 connectDB();
 
-// Middleware
-app.use(cors({
-  origin: ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:5175'],
-  credentials: true
-}));
+app.use(cors({ origin: '*', credentials: false }));
 app.use(express.json());
 app.use(generalLimiter);
 
-// Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/reports', reportRoutes);
 app.use('/api/alerts', alertRoutes);
 app.use('/api/sos', sosRoutes);
 app.use('/api/users', userRoutes);
 
-// Health check
 app.get('/api/health', (req, res) => {
   res.json({ success: true, message: 'GuardianGo API is running 🛡️' });
 });
 
-// Socket
+// ── Overpass proxy — fixes browser CORS block ──
+app.post('/api/proxy/overpass', express.text({ type: '*/*', limit: '1mb' }), async (req, res) => {
+  try {
+    const fetch = (await import('node-fetch')).default;
+    const response = await fetch('https://overpass-api.de/api/interpreter', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: req.body,
+    });
+    const data = await response.json();
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ error: 'Overpass proxy failed', message: err.message });
+  }
+});
+
+// ── Travel Insights proxy ──
+app.post('/api/proxy/travel', express.text({ type: '*/*', limit: '1mb' }), async (req, res) => {
+  try {
+    const fetch = (await import('node-fetch')).default;
+    const response = await fetch('https://overpass-api.de/api/interpreter', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: req.body,
+    });
+    const data = await response.json();
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ error: 'Travel proxy failed', message: err.message });
+  }
+});
+
 initSocket(io);
 
-// Start server
 httpServer.listen(ENV.PORT, () => {
   console.log(`🚀 GuardianGo server running on port ${ENV.PORT}`);
 });
