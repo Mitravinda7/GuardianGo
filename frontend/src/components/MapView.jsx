@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { useLocation } from '../context/LocationContext.jsx';
 
+const BACKEND = import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000';
+
 const fetchRealSafetyData = async (lat, lng, radiusMeters = 3000) => {
   const query = `
     [out:json][timeout:25];
@@ -21,8 +23,10 @@ const fetchRealSafetyData = async (lat, lng, radiusMeters = 3000) => {
     );
     out center;
   `;
-  const res = await fetch('https://overpass-api.de/api/interpreter', {
-    method: 'POST', body: query,
+  const res = await fetch(`${BACKEND}/api/proxy/overpass`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain' },
+    body: query,
   });
   const data = await res.json();
   return data.elements || [];

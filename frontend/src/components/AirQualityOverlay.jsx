@@ -10,7 +10,8 @@ export default function AirQualityOverlay() {
     if (!location.lat) return;
     setLoading(true);
 
-    fetch(`http://localhost:5000/api/alerts/aqi?lat=${location.lat}&lng=${location.lng}`)
+    const BACKEND = import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000';
+    fetch(`${BACKEND}/api/alerts/aqi?lat=${location.lat}&lng=${location.lng}`)
       .then(r => r.json())
       .then(data => {
         if (data.status === 'ok') {
