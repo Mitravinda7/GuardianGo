@@ -10,7 +10,7 @@ const navItems = [
   { to: '/about', icon: 'ℹ️', label: 'About' },
 ];
 
-export default function Sidebar({ isOpen }) {
+export default function Sidebar({ isOpen, onClose}) {
   return (
     <>
       <style>{`
@@ -81,6 +81,16 @@ export default function Sidebar({ isOpen }) {
       `}</style>
 
       <aside className={`sidebar ${isOpen ? '' : 'closed'}`}>
+        {isOpen && (
+        <div
+          onClick={onClose}
+          style={{
+            position: 'fixed', inset: 0,
+            zIndex: -1,
+            background: 'rgba(0,0,0,0.3)',
+          }}
+        />
+      )}
         <div className="sidebar-label">Navigation</div>
         <div className="sidebar-section">
           {navItems.map(item => (

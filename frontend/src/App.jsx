@@ -29,7 +29,7 @@ export default function App() {
       <TranslateWidget />
       <Navbar onToggleSidebar={() => setSidebarOpen(prev => !prev)} />
       <div className="app-body">
-        <Sidebar isOpen={sidebarOpen} />
+        <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
         <main className={`main-content ${sidebarOpen ? '' : 'sidebar-collapsed'}`}>
           <Routes>
             <Route path="/" element={<Home />} />
