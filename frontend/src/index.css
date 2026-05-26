@@ -296,6 +296,64 @@ body {
   /* Auth */
   .auth-card { padding: 28px 20px; margin: 0 12px; }
 
+  /* Make overlay cards smaller so map is visible */
+  .map-overlay {
+    max-width: 115px !important;
+  }
+  .score-card {
+    padding: 10px !important;
+    min-width: 110px !important;
+  }
+  .score-circle {
+    width: 44px !important;
+    height: 44px !important;
+    font-size: 1.1rem !important;
+  }
+  .score-title { font-size: 0.6rem !important; }
+  .score-label { font-size: 0.75rem !important; }
+  .score-sub { font-size: 0.6rem !important; }
+  .aqi-card {
+    padding: 10px !important;
+    min-width: 110px !important;
+  }
+  .aqi-title { font-size: 0.6rem !important; }
+  .aqi-emoji { font-size: 1.2rem !important; }
+  .aqi-label { font-size: 0.75rem !important; }
+  .aqi-value { font-size: 0.65rem !important; }
+  .aqi-advice { font-size: 0.65rem !important; padding: 4px 6px !important; }
+  .aqi-source { font-size: 0.6rem !important; }
+  .stats-row { gap: 4px !important; }
+  .stat-chip { padding: 6px 4px !important; min-width: 0 !important; }
+  .stat-num { font-size: 0.9rem !important; }
+  .stat-lbl { font-size: 0.58rem !important; }
+
+  /* Toolbar — make buttons fit */
+  .home-toolbar {
+    padding: 8px 10px !important;
+    gap: 6px !important;
+  }
+  .toolbar-right { gap: 6px !important; }
+  .layers-btn {
+    font-size: 0.75rem !important;
+    padding: 5px 8px !important;
+  }
+  .time-badge {
+    font-size: 0.72rem !important;
+    padding: 5px 8px !important;
+  }
+
+  /* Eco Route button smaller */
+  .eco-fab-btn {
+    padding: 10px 14px !important;
+    font-size: 0.82rem !important;
+  }
+
+  /* Route bar smaller */
+  .route-bar {
+    padding: 8px 12px !important;
+    font-size: 0.82rem !important;
+  }
+
   /* Layers panel slides up from bottom */
   .layers-panel {
     position: fixed !important;
