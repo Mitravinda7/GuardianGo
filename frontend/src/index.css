@@ -228,3 +228,84 @@ body {
   .grid-2, .grid-3 { grid-template-columns: 1fr; }
   .page-title { font-size: 1.5rem; }
 }
+
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+
+  /* Sidebar slides OVER the map instead of pushing it */
+  .main-content {
+    margin-left: 0 !important;
+  }
+  .sidebar {
+    z-index: 950;
+    box-shadow: 4px 0 24px rgba(0,0,0,0.18);
+  }
+
+  /* Toolbar scrolls horizontally */
+  .toolbar-right {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .toolbar-right::-webkit-scrollbar { display: none; }
+
+  /* Each toolbar button stays on one line */
+  .layers-btn,
+  .eco-btn,
+  .time-badge {
+    white-space: nowrap;
+    flex-shrink: 0;
+    font-size: 0.78rem;
+    padding: 6px 10px;
+  }
+
+  /* Map takes full screen height */
+  .map-area {
+    height: calc(100vh - var(--navbar-height) - 56px);
+  }
+
+  /* Overlay cards — smaller and stacked */
+  .map-overlay {
+    max-width: 140px;
+    gap: 8px;
+  }
+
+  /* Hide legend on mobile — too much space */
+  .legend-card { display: none; }
+
+  /* Eco panel slides up from bottom */
+  .eco-panel {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    height: 75vh !important;
+    border-left: none !important;
+    border-top: 3px solid #27AE60 !important;
+    border-radius: 20px 20px 0 0 !important;
+    z-index: 800 !important;
+  }
+
+  /* Pages */
+  .page { padding: 16px; }
+  .page-title { font-size: 1.5rem; }
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+
+  /* Auth */
+  .auth-card { padding: 28px 20px; margin: 0 12px; }
+
+  /* Layers panel slides up from bottom */
+  .layers-panel {
+    position: fixed !important;
+    top: auto !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    border-radius: 20px 20px 0 0 !important;
+    max-height: 70vh !important;
+    z-index: 3000 !important;
+  }
+}
